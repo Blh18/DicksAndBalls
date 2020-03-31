@@ -94,7 +94,7 @@ class Game {
     public startGame(playerId?: string): void {
         if (this.active) throw new Error('The game has already started')
         if (this.players.length < 2) throw new Error('Not enough players')
-        if (this.players.length > 7) throw new Error('Too many players')
+        if (this.players.length > 12) throw new Error('Too many players')
 
         // find the player on turn that starts the game
         const shufflingPlayerIndex = this.players.findIndex((player => player.id === playerId))
@@ -299,7 +299,7 @@ class Game {
      * Shuffle the deck using the Fisher–Yates algorithm
      */
     private shuffle(): void {
-        this.deck = getUnshuffledDeck()
+        this.deck = [...getUnshuffledDeck(), ...getUnshuffledDeck()]
         let currentIndex = this.deck.length, temporaryValue, randomIndex
 
         while (0 !== currentIndex) {
@@ -357,7 +357,6 @@ class Game {
                 else throw new Error('You cannot skip a turn if an ace wasn\'t played')
             }
         } else throw new Error('Unknown player action')
-
     }
 
     private logGame(): void {
